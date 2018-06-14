@@ -32,6 +32,7 @@
 #include "DNA_anim_types.h"
 #include "DNA_armature_types.h"
 #include "DNA_gpencil_types.h"
+#include "DNA_gpencil_modifier_types.h"
 #include "DNA_group_types.h"
 #include "DNA_lamp_types.h"
 #include "DNA_lightprobe_types.h"
@@ -994,58 +995,70 @@ static void tselem_draw_icon(uiBlock *block, int xmax, float x, float y, TreeSto
 					case eModifierType_NormalEdit:
 						ICON_DRAW(ICON_MOD_NORMALEDIT);
 						break;
-
-					/* GPencil Modifiers */
-					case eModifierType_Gpencil_Noise:
-						ICON_DRAW(ICON_RNDCURVE);
-						break;
-					case eModifierType_Gpencil_Subdiv:
-						ICON_DRAW(ICON_MOD_SUBSURF);
-						break;
-					case eModifierType_Gpencil_Thick:
-						ICON_DRAW(ICON_MAN_ROT);
-						break;
-					case eModifierType_Gpencil_Tint:
-						ICON_DRAW(ICON_COLOR);
-						break;
-					case eModifierType_Gpencil_Instance:
-						ICON_DRAW(ICON_MOD_ARRAY);
-						break;
-					case eModifierType_Gpencil_Build:
-						ICON_DRAW(ICON_MOD_BUILD);
-						break;
-					case eModifierType_Gpencil_Opacity:
-						ICON_DRAW(ICON_MOD_MASK);
-						break;
-					case eModifierType_Gpencil_Color:
-						ICON_DRAW(ICON_GROUP_VCOL);
-						break;
-					case eModifierType_Gpencil_Lattice:
-						ICON_DRAW(ICON_MOD_LATTICE);
-						break;
-					case eModifierType_Gpencil_Simplify:
-						ICON_DRAW(ICON_MOD_DECIM);
-						break;
-					case eModifierType_Gpencil_Smooth:
-						ICON_DRAW(ICON_MOD_SMOOTH);
-						break;
-					case eModifierType_Gpencil_Hook:
-						ICON_DRAW(ICON_HOOK);
-						break;
-					case eModifierType_Gpencil_Offset:
-						ICON_DRAW(ICON_MOD_DISPLACE);
-						break;
-
 					/* Default */
 					case eModifierType_None:
 					case eModifierType_ShapeKey:
-
 					case NUM_MODIFIER_TYPES:
 						ICON_DRAW(ICON_DOT);
 						break;
 				}
 				break;
 			}
+#ifdef TODO_GREASEPENCIL_MODS /* Split the outliner defines. */
+			case TSE_MODIFIER:
+			{
+				Object *ob = (Object *)tselem->id;
+				GreasePencilModifierData *gmd = BLI_findlink(&ob->greasepencil_modifiers, tselem->nr);
+				switch ((GreasePencilModifierType)gmd->type) {
+					case eGreasePencilModifierType_Noise:
+						ICON_DRAW(ICON_RNDCURVE);
+						break;
+					case eGreasePencilModifierType_Subdiv:
+						ICON_DRAW(ICON_MOD_SUBSURF);
+						break;
+					case eGreasePencilModifierType_Thick:
+						ICON_DRAW(ICON_MAN_ROT);
+						break;
+					case eGreasePencilModifierType_Tint:
+						ICON_DRAW(ICON_COLOR);
+						break;
+					case eGreasePencilModifierType_Instance:
+						ICON_DRAW(ICON_MOD_ARRAY);
+						break;
+					case eGreasePencilModifierType_Build:
+						ICON_DRAW(ICON_MOD_BUILD);
+						break;
+					case eGreasePencilModifierType_Opacity:
+						ICON_DRAW(ICON_MOD_MASK);
+						break;
+					case eGreasePencilModifierType_Color:
+						ICON_DRAW(ICON_GROUP_VCOL);
+						break;
+					case eGreasePencilModifierType_Lattice:
+						ICON_DRAW(ICON_MOD_LATTICE);
+						break;
+					case eGreasePencilModifierType_Simplify:
+						ICON_DRAW(ICON_MOD_DECIM);
+						break;
+					case eGreasePencilModifierType_Smooth:
+						ICON_DRAW(ICON_MOD_SMOOTH);
+						break;
+					case eGreasePencilModifierType_Hook:
+						ICON_DRAW(ICON_HOOK);
+						break;
+					case eGreasePencilModifierType_Offset:
+						ICON_DRAW(ICON_MOD_DISPLACE);
+						break;
+
+					/* Default */
+					case eModifierType_None:
+					case NUM_GREASEPENCIL_MODIFIER_TYPES:
+						ICON_DRAW(ICON_DOT);
+						break;
+				}
+				break;
+			}
+#endif
 			case TSE_POSE_BASE:
 				ICON_DRAW(ICON_ARMATURE_DATA);
 				break;
